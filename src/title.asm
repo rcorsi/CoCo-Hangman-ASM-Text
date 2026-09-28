@@ -3,53 +3,69 @@
 
 ; Title screen
 TITLSCR
+        JSR     CLRSCRN
+
         LDX     #TEXTSTR
         LEAX    10,X
 
-TITLL1
+!
         CMPX    #TEXTEND
-        BGT     TITLEND
+        BGT     >
 
-        JSR     CLRSCRN
-
-        LDY     #GTITLE
+        LDY     #GMTITLE
         JSR     PRINT
 
         LEAX    32,X
-        CMPX    #TEXTEND
-        BGT     TITLEND
+        CMPX    #TEXTEND-32
+        BGT     >
 
-        LDY     #GAUTHOR
+        LDY     #GMAUTH
         JSR     PRINT
 
         JSR     DELAY
 
-        BRA     TITLL1
+        JSR     ERASE   erase author line
 
-TITLEND
+        LEAX    -32,X
+        LDY     #GMTITLE
+        JSR     ERASE   erase title line
+
+        LEAX    32,X
+
+        BRA     <
+
+!
         LEAX    -32,X
 
         CMPX    #TEXTSTR
-        BLE     TITLSCR
+        BLE     >
 
-        JSR     CLRSCRN
-
-        LDY     #GTITLE
+        LDY     #GMTITLE
         JSR     PRINT
 
         LEAX    32,X
 
-        LDY     #GAUTHOR
+        LDY     #GMAUTH
         JSR     PRINT
-
-        LEAX    -32,X
 
         JSR     DELAY
 
-        BRA     TITLEND
+        JSR     ERASE   erase author line
+
+        LEAX    -32,X
+        LDY     #GMTITLE
+        JSR     ERASE   erase title line
+
+        BRA     <
+
+!       LDX     CURRTOP
+
 
         RTS
 
 
-GTITLE  FCN     "COCO HANGMAN"
-GAUTHOR FCN     "BY ROCCO CORSI"
+GMTITLE FCN     "COCO HANGMAN"
+GMAUTH  FCN     "BY ROCCO CORSI"
+
+CURRTOP FDB     $0
+CURRBOT FDB     $0

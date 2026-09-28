@@ -5,15 +5,22 @@
 
 main:
 
-        JSR TITLSCR
+        * JSR     SOUNDON
+        * JSR     THESOUND2
+        * JSR     SOUNDOFF
+        JSR     TITLSCR
         RTS
 
 
         INCLUDE hangman.asm
 
+        INCLUDE screen.asm
+
         INCLUDE sound.asm
 
         INCLUDE title.asm
+
+        INCLUDE utils.asm
 
         END     main
 
