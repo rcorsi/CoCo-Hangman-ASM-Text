@@ -13,5 +13,7 @@ main:
 
         INCLUDE sound.asm
 
+        INCLUDE title.asm
+
         END     main
 
