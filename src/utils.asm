@@ -2,7 +2,7 @@
 ; by Rocco Corsi
 
 DELAY   PSHS    X
-        LDX     #$1000
+        LDX     CURRDLY
 !
         NOP
         NOP
@@ -17,3 +17,11 @@ DELAY   PSHS    X
         PULS    X
         RTS
 
+DELYSET STD     CURRDLY
+        RTS
+
+DELYGET LDD     CURRDLY
+        RTS
+
+; Current Delay value set with default value
+CURRDLY FDB     $1000

@@ -5,10 +5,7 @@
 
 main:
 
-        * JSR     SOUNDON
-        * JSR     THESOUND2
-        * JSR     SOUNDOFF
-        JSR     TITLSCR
+        JSR     START_GAME
         RTS
 
 
