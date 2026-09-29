@@ -3,20 +3,32 @@
 
 START_GAME:
 
-*         * JSR     TITLSCR
+         JSR     TITLE_SCREEN
 
-         JSR     CNTWRDS
+         JSR     COUNT_WORDS
          STB     NUMWORD
 
          JSR     PRESKEY
 
-         JSR     WAITKEY
+!        JSR     WAITKEY
          STB     NUMRAND
- 
+
+         LDA     NUMRAND
+         LDB     NUMWORD
+         JSR     MODULO
+
+         JSR     FIND_WORD
+         TFR     X,Y
+
+         LDX     #TEXTSTR
+         JSR     PRINT
+         BRA     <
+
 END_GAME:
         BRA     END_GAME
-;JSR     CLRSCRN
+
 EXIT_GAME:
+        JSR     CLRSCRN
         RTS
 
 PRESKEY LDX     #TEXTEND
@@ -26,8 +38,11 @@ PRESKEY LDX     #TEXTEND
         RTS
 
 ; Count words in the word list
-;   register B has the count
-CNTWRDS CLRB
+;   OUT register B has the count
+COUNT_WORDS:
+        PSHS    A,X
+
+        CLRB
         LDX     #WORDLST
 !       LDA     ,X+
         CMPA    #0
@@ -36,8 +51,33 @@ CNTWRDS CLRB
         LDA     ,X+
         CMPA    #0
         BNE     <
+
+        PULS    A,X
         RTS
 
+; Find words in the word list
+;   IN  register A has the # of the word
+;   OUT register X has the start of the word
+FIND_WORD:
+        PSHS    A,B
+
+        STA     FINDNUM
+        CLRB
+        LDX     #WORDLST
+FINDNXT:
+        CMPB    FINDNUM
+        BEQ     FINDDONE
+        INCB
+!       LDA     ,X+
+        CMPA    #0
+        BNE     <
+        BRA     FINDNXT
+
+FINDDONE:
+        PULS    A,B
+        RTS
+
+FINDNUM FCB     $0
 
 
 PRESMSG FCN     "PRESS ANY KEY"

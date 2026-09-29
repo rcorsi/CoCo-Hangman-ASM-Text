@@ -1,10 +1,12 @@
-
 # CoCo Assembler Hangman - text version
 
 First CoCo 6809 assembler program written in a long while for me. I had attempted this way back in early 80s when I was too young. I had given up as EDTASM+ was a nightmare with crashes, with the long delays in reloading everything. I can't remember if I was saving to cassette or diskette, but either way it would really test someones patience.
 
 Now attempting again many years later with Linux, VSCode, lwasm, xroar, m6809-gdb
 
+## Status
+
+In progress as of 2026/09/29.
 
 ## PSEUDO CODE for the game
 
@@ -12,7 +14,7 @@ Now attempting again many years later with Linux, VSCode, lwasm, xroar, m6809-gd
 | :- | :-: |
 | show title screen | mostly done |
 | spin on variable to get "random" value | mostly done |
-| pick word from list with random value | not done |
+| pick word from list with random value | mostly done |
 | clear screen | done |
 | show empty HANGMAN | not done |
 | show missing letters | not done |

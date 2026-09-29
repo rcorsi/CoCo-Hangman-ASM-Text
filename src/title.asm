@@ -2,11 +2,11 @@
 ; by Rocco Corsi
 
 ; Title screen
-TITLSCR
+TITLE_SCREEN:
         JSR     CLRSCRN
 
         LDD     #$200
-        JSR     DELYSET
+        JSR     DELAY_SET
 
 ; set bottom to one line from the bottom
         LDX     #TEXTEND

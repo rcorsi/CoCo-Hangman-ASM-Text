@@ -2,8 +2,8 @@
 ; by Rocco Corsi
 
 ; wait for a key press
-;   register A has pressed key
-;   register B has counter value (simulated random number)
+;   OUT register A has pressed key
+;   OUT register B has counter value (simulated random number)
 WAITKEY:
         CLRB
 
@@ -13,27 +13,31 @@ WAITKEY:
 
         RTS
 
-; output single char held in register A
-OUTKEY  JSR     [CHROUT]    ; Call CHROUT indirectly for single character
+; output single char
+;   IN register A has char to print out
+OUTKEY:
+        JSR     [CHROUT]    ; Call CHROUT indirectly for single character
 
         RTS
 
-
 ; Perform Modulo operation
-;   register A contains the input and output number
-;   register B contains the modules
-MODULO  STA     MODRES
-!       CMPB    MODRES
-        BGE     >
-        SUBB    MODRES
+;   IN/OUT register A contains the number
+;   IN register B contains the modules
+MODULO:
+        STB     MODDIV
+!       CMPA    MODDIV
+        BCS     >
+        SUBA    MODDIV
         BRA     <
-!       RTS
+!
+        RTS
 
-MODMEM  FCB     $0
-MODRES  FCB     $0
+MODDIV  FCB     $0
 
-; delay loop
-DELAY   PSHS    X
+
+; delay loop using default value or value set with DELAY_SET
+DELAY:
+        PSHS    X
         LDX     CURRDLY
 !
         NOP
@@ -49,10 +53,12 @@ DELAY   PSHS    X
         PULS    X
         RTS
 
-DELYSET STD     CURRDLY
+DELAY_SET:
+        STD     CURRDLY
         RTS
 
-DELYGET LDD     CURRDLY
+DELAY_GET:
+        LDD     CURRDLY
         RTS
 
 ; Current Delay value set with default value

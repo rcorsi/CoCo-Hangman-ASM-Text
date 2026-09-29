@@ -28,7 +28,9 @@ CLRSCRN PSHS    A,X
         PULS    A,X
         RTS
 
-; Write Y text to X location
+; Write text to screen location
+;   IN register Y has text pointer
+;   IN register X has screen location
 PRINT   PSHS    A,X,Y
 
 !       LDA     ,Y+
@@ -41,14 +43,17 @@ PRINT   PSHS    A,X,Y
 !       PULS    A,X,Y
         RTS
 
-; convert ASCII space to VIDEO RAM space
+; Convert ASCII space to VIDEO RAM space
+;   IN/OUT register A has character to check
 FIXSPC  CMPA    #ASCSPC
         BNE     >
         LDA     #VIDSPC
 !       RTS
 
 
-; Write Y text to X location
+; Erase text to screen location
+;   IN register Y has text pointer
+;   IN register X has screen location
 ERASE   PSHS    A,X,Y
 
 !       LDA     ,Y+
