@@ -1,9 +1,6 @@
 ; HANGMAN for CoCo
 ; Copyright (c) 2026 Rocco Corsi
 
-; Invert the 32x16 text screen repeatedly
-INVREPT JSR     INVSCRN
-        BRA     INVREPT
 
 ; Invert the 32x16 text screen
 INVSCRN LDX     #TEXTSTR

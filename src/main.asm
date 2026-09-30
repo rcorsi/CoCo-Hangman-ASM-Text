@@ -6,6 +6,10 @@
 main:
 
         JSR     START_GAME
+
+; clear the screen and get it back to green background
+        JSR     CLRSCRN
+        JSR     INVSCRN
         RTS
 
 

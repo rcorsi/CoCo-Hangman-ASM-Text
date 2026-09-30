@@ -28,7 +28,6 @@ START_GAME:
 
         JSR     START_ROUND
 EXIT_GAME:
-        ;JSR     CLRSCRN
         RTS
 
 START_ROUND:
