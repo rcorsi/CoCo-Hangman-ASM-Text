@@ -38,6 +38,7 @@ START_ROUND:
         STA     WRONG_GUESSES
 
 ; show empty hangman
+        LDA     #BLKSPC
         JSR     CLRSCRN
         JSR     SHOW_GALLOWS
 
@@ -63,6 +64,30 @@ END_ROUND:
 ; else go back to "ask for a guess"
 
 SHOW_GALLOWS:
+        PSHS   A,B,X,Y
+
+        LDX    #TEXTSTR
+        LEAX   16,X
+        LDY    #GALLOW_DATA
+        PSHS   X
+
+SHOW_GALLOWS_DATA:
+        LDA    ,Y+
+        CMPA   #$FF
+        BEQ    >
+        CMPA   #$FE
+        BEQ    SHOW_GALLOWS_END
+        ADDA   #$80
+        STA    ,X+
+        BRA    SHOW_GALLOWS_DATA
+!       PULS   X
+        LEAX   32,X
+        PSHS   X
+        BRA    SHOW_GALLOWS_DATA
+SHOW_GALLOWS_END:
+
+!       PULS   X
+        PULS   A,B,X,Y
         RTS
 
 SHOW_LETTERS:
@@ -160,6 +185,23 @@ WORDLST FCN     "AMAZING"
         FCN     "YELLOW"
         FCN     "ZEBRA"
         FCB     $00
+
+GALLOW_DATA:
+        FCB     3,3,3,3,3,3,3,3,0,0,255
+        FCB     5,0,0,0,9,0,0,10,0,0,255
+        FCB     0,0,0,0,0,9,0,10,0,0,255
+        FCB     0,0,0,0,0,0,9,10,0,0,255
+        FCB     0,0,0,0,0,0,0,10,0,0,255
+        FCB     0,0,0,0,0,0,0,10,0,0,255
+        FCB     0,0,0,0,0,0,0,10,0,0,255
+        FCB     0,0,0,0,0,0,0,10,0,0,255
+        FCB     0,0,0,0,0,0,0,10,0,0,255
+        FCB     0,0,0,0,0,0,0,10,0,0,255
+        FCB     0,0,0,0,0,0,0,10,0,0,255
+        FCB     0,0,0,0,0,0,0,10,0,0,255
+        FCB     15,15,15,15,15,15,15,15,0,0,255
+        FCB     254
+
 
 ; Number of Words available for the game
 NUMWORD FCB     $0

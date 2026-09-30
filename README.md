@@ -12,11 +12,11 @@ In progress as of 2026/09/29.
 
 | Description | Status |
 | :- | :-: |
-| show title screen | mostly done |
-| spin on variable to get "random" value | mostly done |
-| pick word from list with random value | mostly done |
+| show title screen | done |
+| spin on variable to get "random" value | done |
+| pick word from list with "random" value | done |
 | clear screen | done |
-| show empty HANGMAN | not done |
+| show empty HANGMAN gallows | done |
 | show missing letters | not done |
 | ask for a guess | in progress |
 | if guess right, show letters | not done |

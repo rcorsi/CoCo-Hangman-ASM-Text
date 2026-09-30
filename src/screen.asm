@@ -2,31 +2,17 @@
 ; Copyright (c) 2026 Rocco Corsi
 
 
-; Invert the 32x16 text screen
-INVSCRN PSHS    A,X
+*; Fill the 32x16 text screen with char
+; Similar to CLS
+;   IN register A has char to fill the screen
+CLRSCRN PSHS    X
 
-        LDX     #TEXTSTR
-!       LDA     ,X
-        EORA    #$40    flip bit 6 (0100_0000) only
-        STA     ,X+
-        CMPX    #TEXTEND
-        BLO     <
-
-        PULS    A,X
-        RTS
-
-
-; Clear the 32x16 text screen
-; Same as CLS
-CLRSCRN PSHS    A,X
-
-        LDA     #VIDSPC
         LDX     #TEXTSTR
 !       STA     ,X+
         CMPX    #TEXTEND
         BLO     <
 
-        PULS    A,X
+        PULS    X
         RTS
 
 ; Write text to screen location
@@ -55,18 +41,18 @@ MAKE_INVERTED:
 
 
 ; Erase text to screen location
-;   IN register Y has text pointer
+;   IN register A has fill char
 ;   IN register X has screen location
-ERASE   PSHS    A,X,Y
+;   IN register Y has text pointer
+ERASE   PSHS    B,X,Y
 
-!       LDA     ,Y+
-        CMPA    #NULCHR
+!       LDB     ,Y+
+        CMPB    #NULCHR
         BEQ     >
-        LDA     #VIDSPC
         STA     ,X+
         BRA     <
 
-!       PULS    A,X,Y
+!       PULS    B,X,Y
         RTS
 
 
@@ -76,9 +62,13 @@ TEXTSTR EQU     $0400
 TEXTEND EQU     $0600
 
 
-; ASCII space character
-ASCSPC  EQU     $20
-; Video RAM space character
-VIDSPC  EQU     $20
+; Video RAM space character - Inverted
+INVSPC  EQU     $20
+; Video RAM space character - Normal
+NORSPC  EQU     $60
+; Video RAM black character
+BLKSPC  EQU     $80
+; Video RAM Green character
+GRNSPC  EQU     $8F
 ; ASCII NULL character / string terminator
 NULCHR  EQU     $0

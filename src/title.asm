@@ -3,6 +3,7 @@
 
 ; Title screen
 TITLE_SCREEN:
+        LDA     #INVSPC
         JSR     CLRSCRN
 
         LDD     #$200
@@ -37,6 +38,7 @@ TITLE_START:
 
         JSR     DELAY
 
+        LDA     #INVSPC
         JSR     ERASE   erase author line
 
         LEAX    -32,X

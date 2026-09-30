@@ -8,8 +8,8 @@ main:
         JSR     START_GAME
 
 ; clear the screen and get it back to green background
+        LDA     #NORSPC
         JSR     CLRSCRN
-        JSR     INVSCRN
         RTS
 
 
