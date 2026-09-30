@@ -19,7 +19,7 @@ INVSCRN LDX     #TEXTSTR
 ; Same as CLS
 CLRSCRN PSHS    A,X
 
-        LDA     #$60
+        LDA     #VIDSPC
         LDX     #TEXTSTR
 !       STA     ,X+
         CMPX    #TEXTEND
@@ -37,6 +37,7 @@ PRINT   PSHS    A,X,Y
         CMPA    #NULCHR
         BEQ     >
         JSR     FIXSPC
+        ANDA    #$BF
         STA     ,X+
         BRA     <
 
@@ -76,6 +77,6 @@ TEXTEND EQU     $0600
 ; ASCII space character
 ASCSPC  EQU     $20
 ; Video RAM space character
-VIDSPC  EQU     $60
+VIDSPC  EQU     $20
 ; ASCII NULL character / string terminator
 NULCHR  EQU     $0
