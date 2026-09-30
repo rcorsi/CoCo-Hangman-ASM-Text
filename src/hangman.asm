@@ -28,20 +28,36 @@ START_GAME:
 
         JSR     START_ROUND
 EXIT_GAME:
-        JSR     CLRSCRN
+        ;JSR     CLRSCRN
         RTS
 
 START_ROUND:
+; reset counters
+        CLRA
+        CLRB
+        STA     TOTAL_GUESSES
+        STA     WRONG_GUESSES
+
 ; show empty hangman
         JSR     CLRSCRN
         JSR     SHOW_GALLOWS
 
 ; show missing letters
         JSR     SHOW_LETTERS
-        RTS
 
 ; ask for a guess
-; if guess right, show letters
+!       LDA     TOTAL_GUESSES
+        INCA
+        CMPA    #MAX_GUESSES
+        BEQ     END_ROUND
+        STA     TOTAL_GUESSES
+        JSR     WAITKEY
+        BRA     <
+
+; end of the round
+END_ROUND:
+        RTS
+
 ; if guess wrong, add part to HANGMAN
 ; if too many guess, hangman died
 ; if correct word guessed, play happy music, and start over
@@ -51,6 +67,20 @@ SHOW_GALLOWS:
         RTS
 
 SHOW_LETTERS:
+        PSHS    A,B,X,Y
+
+        LDB     #EMPTY_CHAR
+        LDX     WORDPTR
+        LDY     #WORD_POSITION
+!       LDA     ,X+
+        CMPA    #0
+        BEQ     >
+; if guess right, show letter
+        STB     ,Y
+        LEAY    2,Y
+        BRA     <
+
+!       PULS    A,B,X,Y
         RTS
 
 PRESKEY LDX     #TEXTEND
@@ -138,3 +168,14 @@ NUMRAND FCB     $0
 
 WORDPTR FDB     $0000
 
+TOTAL_GUESSES:
+        FCB     $0
+WRONG_GUESSES:
+        FCB     $0
+
+LETTER_GUESSES:
+        ZMB     12
+
+WORD_POSITION EQU    $5C5
+EMPTY_CHAR    EQU    '-'
+MAX_GUESSES   EQU    7
