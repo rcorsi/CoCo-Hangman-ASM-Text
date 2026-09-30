@@ -3,32 +3,54 @@
 
 START_GAME:
 
-         JSR     TITLE_SCREEN
+; Show Title Screen
+        JSR     TITLE_SCREEN
 
-         JSR     COUNT_WORDS
-         STB     NUMWORD
+; Get the number of words
+        JSR     COUNT_WORDS
+        STB     NUMWORD
 
-         JSR     PRESKEY
+; Show Press Any Key message on screen
+        JSR     PRESKEY
 
-!        JSR     WAITKEY
-         STB     NUMRAND
+; Wait for keypress and use it as "random" number.
+        JSR     WAITKEY
+        STB     NUMRAND
 
-         LDA     NUMRAND
-         LDB     NUMWORD
-         JSR     MODULO
+; Massage the "random" number so is within word list limits
+        LDA     NUMRAND
+        LDB     NUMWORD
+        JSR     MODULO
 
-         JSR     FIND_WORD
-         TFR     X,Y
+; Find location of selected word
+        JSR     FIND_WORD
+        STX     WORDPTR
 
-         LDX     #TEXTSTR
-         JSR     PRINT
-         BRA     <
-
-END_GAME:
-        BRA     END_GAME
-
+        JSR     START_ROUND
 EXIT_GAME:
         JSR     CLRSCRN
+        RTS
+
+START_ROUND:
+; show empty hangman
+        JSR     CLRSCRN
+        JSR     SHOW_GALLOWS
+
+; show missing letters
+        JSR     SHOW_LETTERS
+        RTS
+
+; ask for a guess
+; if guess right, show letters
+; if guess wrong, add part to HANGMAN
+; if too many guess, hangman died
+; if correct word guessed, play happy music, and start over
+; else go back to "ask for a guess"
+
+SHOW_GALLOWS:
+        RTS
+
+SHOW_LETTERS:
         RTS
 
 PRESKEY LDX     #TEXTEND
@@ -113,3 +135,6 @@ WORDLST FCN     "AMAZING"
 ; Number of Words available for the game
 NUMWORD FCB     $0
 NUMRAND FCB     $0
+
+WORDPTR FDB     $0000
+

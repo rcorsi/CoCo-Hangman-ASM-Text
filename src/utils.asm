@@ -22,7 +22,7 @@ OUTKEY:
 
 ; Perform Modulo operation
 ;   IN/OUT register A contains the number
-;   IN register B contains the modules
+;   IN register B contains the modulus divisor
 MODULO:
         STB     MODDIV
 !       CMPA    MODDIV
