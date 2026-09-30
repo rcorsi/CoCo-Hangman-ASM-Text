@@ -3,12 +3,16 @@
 
 
 ; Invert the 32x16 text screen
-INVSCRN LDX     #TEXTSTR
+INVSCRN PSHS    A,X
+
+        LDX     #TEXTSTR
 !       LDA     ,X
-        EORA    #$40
+        EORA    #$40    flip bit 6 (0100_0000) only
         STA     ,X+
         CMPX    #TEXTEND
         BLO     <
+
+        PULS    A,X
         RTS
 
 
@@ -33,19 +37,20 @@ PRINT   PSHS    A,X,Y
 !       LDA     ,Y+
         CMPA    #NULCHR
         BEQ     >
-        JSR     FIXSPC
-        ANDA    #$BF
+
+        JSR     MAKE_INVERTED
         STA     ,X+
         BRA     <
 
 !       PULS    A,X,Y
         RTS
 
-; Convert ASCII space to VIDEO RAM space
+; Convert to inverted char if char < 128
 ;   IN/OUT register A has character to check
-FIXSPC  CMPA    #ASCSPC
-        BNE     >
-        LDA     #VIDSPC
+MAKE_INVERTED:
+        CMPA    #$80    special graphics symbols?
+        BCC     >       do nothing, skip them
+        ANDA    #$BF    turn off bit 6 (1011_1111)
 !       RTS
 
 
