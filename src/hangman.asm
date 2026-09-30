@@ -3,12 +3,12 @@
 
 START_GAME:
 
-; Show Title Screen
-        JSR     TITLE_SCREEN
-
 ; Get the number of words
         JSR     COUNT_WORDS
         STB     NUMWORD
+
+; Show Title Screen
+        JSR     TITLE_SCREEN
 
 ; Show Press Any Key message on screen
         JSR     PRESKEY
@@ -16,6 +16,8 @@ START_GAME:
 ; Wait for keypress and use it as "random" number.
         JSR     WAITKEY
         STB     NUMRAND
+        CMPA    #BRKKEY
+        BEQ     EXIT_GAME
 
 ; Massage the "random" number so is within word list limits
         LDA     NUMRAND
