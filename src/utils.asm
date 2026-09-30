@@ -1,5 +1,5 @@
 ; HANGMAN for CoCo
-; by Rocco Corsi
+; Copyright (c) 2026 Rocco Corsi
 
 ; wait for a key press
 ;   OUT register A has pressed key

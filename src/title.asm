@@ -1,5 +1,5 @@
 ; HANGMAN for CoCo
-; by Rocco Corsi
+; Copyright (c) 2026 Rocco Corsi
 
 ; Title screen
 TITLE_SCREEN:

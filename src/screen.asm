@@ -1,5 +1,5 @@
 ; HANGMAN for CoCo
-; by Rocco Corsi
+; Copyright (c) 2026 Rocco Corsi
 
 ; Invert the 32x16 text screen repeatedly
 INVREPT JSR     INVSCRN
