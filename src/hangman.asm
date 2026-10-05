@@ -11,7 +11,7 @@ START_GAME:
         JSR     TITLE_SCREEN
 
 ; Show Press Any Key message on screen
-        JSR     PRESKEY
+        JSR     PRESS_A_KEY
 
 ; Wait for keypress and use it as "random" number.
         JSR     WAITKEY
@@ -53,6 +53,8 @@ START_ROUND:
         CMPA    #MAX_GUESSES
         BEQ     END_ROUND
         STA     TOTAL_GUESSES
+
+        JSR     GUESS_KEY
         JSR     WAITKEY
         BRA     <
 
@@ -69,17 +71,17 @@ SHOW_GALLOWS:
         PSHS   A,B,X,Y
 
         LDX    #TEXTSTR
-        LEAX   16,X
+        LEAX   24,X
         LDY    #GALLOW_DATA
         PSHS   X
 
 SHOW_GALLOWS_DATA:
         LDA    ,Y+
-        CMPA   #$FF
+        CMPA   #$FF     end of a line
         BEQ    >
-        CMPA   #$FE
+        CMPA   #$FE     end of the data
         BEQ    SHOW_GALLOWS_END
-        ADDA   #$80
+        ADDA   #$80     get a "graphic" text character
         STA    ,X+
         BRA    SHOW_GALLOWS_DATA
 !       PULS   X
@@ -109,10 +111,26 @@ SHOW_LETTERS:
 !       PULS    A,B,X,Y
         RTS
 
-PRESKEY LDX     #TEXTEND
+PRESS_A_KEY:
+        PSHS    X,Y
+
+        LDX     #TEXTEND
         LEAX    -32,X
         LDY     #PRESMSG
         JSR     PRINT
+
+        PULS    X,Y
+        RTS
+
+GUESS_KEY:
+        PSHS    X,Y
+
+        LDX     #TEXTEND
+        LEAX    -32,X
+        LDY     #MKGUESS
+        JSR     PRINT
+
+        PULS    X,Y
         RTS
 
 ; Count words in the word list
@@ -159,6 +177,7 @@ FINDNUM FCB     $0
 
 
 PRESMSG FCN     "PRESS ANY KEY"
+MKGUESS FCN     "GUESS A LETTER!"
 
 WORDLST FCN     "AMAZING"
         FCN     "BEFRIEND"
@@ -219,6 +238,6 @@ WRONG_GUESSES:
 LETTER_GUESSES:
         ZMB     12
 
-WORD_POSITION EQU    $5C5
+WORD_POSITION EQU    $5A5
 EMPTY_CHAR    EQU    '-'
 MAX_GUESSES   EQU    7
