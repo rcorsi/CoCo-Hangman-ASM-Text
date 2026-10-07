@@ -6,7 +6,7 @@ Now attempting again many years later with Linux, VSCode, lwasm, xroar, m6809-gd
 
 ## Status
 
-In progress as of 2026/09/29.
+In progress as of 2026/10/07.
 
 ## PSEUDO CODE for the game
 
@@ -25,3 +25,10 @@ In progress as of 2026/09/29.
 | if correct word guessed, play happy music, and start over | not done |
 | else go back to "ask for a guess" | not done |
 
+## Additional features |
+
+| Description | Status |
+| :- | :-: |
+| Create DSK file | done |
+| Start xroar with DSK file | done |
+| Preset command to load game | done |
