@@ -18,9 +18,9 @@ WAITKEY:
 ;   OUT register B has counter value (simulated random number)
 WAIT_FOR_LETTER:
 !       JSR     WAITKEY
-        CMPA    #$41    Letter 'A'
+        CMPA    #'A'
         BLO     <
-        CMPA    #$5A    Letter 'Z'
+        CMPA    #'Z'
         BHI     <
         RTS
 
