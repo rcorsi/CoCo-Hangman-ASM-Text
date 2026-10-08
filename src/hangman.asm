@@ -9,6 +9,7 @@ START_GAME:
 
 ; Show Title Screen
         JSR     TITLE_SCREEN
+        JSR     THESOUND2
 
 ; Show Press Any Key message on screen
         JSR     PRESS_A_KEY
@@ -33,11 +34,11 @@ EXIT_GAME:
         RTS
 
 START_ROUND:
-; reset counters
+; reset counters & lists
         CLRA
-        CLRB
         STA     TOTAL_GUESSES
         STA     WRONG_GUESSES
+        STA     LETTER_GUESSES
 
 ; show empty hangman
         LDA     #BLKSPC
@@ -55,7 +56,8 @@ START_ROUND:
         STA     TOTAL_GUESSES
 
         JSR     GUESS_KEY
-        JSR     WAITKEY
+        JSR     WAIT_FOR_LETTER
+
         BRA     <
 
 ; end of the round

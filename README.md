@@ -6,7 +6,7 @@ Now attempting again many years later with Linux, lwasm, xroar, m6809-gdb, VSCod
 
 ## Status
 
-In progress as of 2026/10/07.
+In progress as of 2026/10/08.
 
 ## PSEUDO CODE for the game
 
@@ -19,6 +19,7 @@ In progress as of 2026/10/07.
 | show empty HANGMAN gallows | done |
 | show missing letters | not done |
 | ask for a guess | in progress |
+| add some sounds | in progress |
 | if guess right, show letters | not done |
 | if guess wrong, add part to HANGMAN | not done |
 | if too many guess, hangman died | not done |

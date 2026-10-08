@@ -13,6 +13,17 @@ WAITKEY:
 
         RTS
 
+; wait for an upper case letter only
+;   OUT register A has pressed key
+;   OUT register B has counter value (simulated random number)
+WAIT_FOR_LETTER:
+!       JSR     WAITKEY
+        CMPA    #$41    Letter 'A'
+        BLO     <
+        CMPA    #$5A    Letter 'Z'
+        BHI     <
+        RTS
+
 ; output single char
 ;   IN register A has char to print out
 OUTKEY:
