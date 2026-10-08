@@ -19,10 +19,12 @@ WAITKEY:
 WAIT_FOR_LETTER:
 !       JSR     WAITKEY
         CMPA    #'A'
-        BLO     <
+        BLO     >
         CMPA    #'Z'
-        BHI     <
+        BHI     >
         RTS
+!       JSR     THESOUND1
+        BRA     WAIT_FOR_LETTER
 
 ; output single char
 ;   IN register A has char to print out

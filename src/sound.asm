@@ -32,11 +32,14 @@ THESOUND1:
         JSR     SOUNDON
         PSHS    B,X
 
-        LDX     #$FF
+        LDX     #$40
 LOOP10
         LDB     #$5F
 LOOP11
+        PSHS    B
+        ANDB    #$FC    top 6-bits = 1111_1100 = $FC
         STB     $FF20
+        PULS    B
         NOP
         NOP
         NOP
